@@ -5,31 +5,33 @@ import db from '.';
 class Club extends Model {
   // public <campo>!: <tipo>;
   public id?: number;
+
   public clubName: string;
 }
 
 Club.init({
   // ... Campos
   id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true,
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
   },
   clubName: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 }, {
   // ... Outras configs
   underscored: true,
   sequelize: db,
-  modelName: 'clubs',
+  modelName: 'Clubs',
+  tableName: 'clubs',
   timestamps: false,
 });
 
 /**
-  * `Workaround` para aplicar as associations em TS: 
+  * `Workaround` para aplicar as associations em TS:
   * Associations 1:N devem ficar em uma das instâncias de modelo
   * */
 
