@@ -1,28 +1,24 @@
-import { DataTypes, Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import db from '.';
-// import OtherModel from './OtherModel';
 
-class Club extends Model {
-  // public <campo>!: <tipo>;
-  public id?: number;
+class Clubs extends Model {
+  public id: number;
 
   public clubName: string;
 }
 
-Club.init({
-  // ... Campos
+Clubs.init({
   id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
     allowNull: false,
+    autoIncrement: true,
     primaryKey: true,
+    type: DataTypes.INTEGER,
   },
   clubName: {
-    type: DataTypes.STRING,
     allowNull: false,
+    type: DataTypes.STRING,
   },
 }, {
-  // ... Outras configs
   underscored: true,
   sequelize: db,
   modelName: 'Clubs',
@@ -30,15 +26,4 @@ Club.init({
   timestamps: false,
 });
 
-/**
-  * `Workaround` para aplicar as associations em TS:
-  * Associations 1:N devem ficar em uma das instâncias de modelo
-  * */
-
-// OtherModel.belongsTo(Example, { foreignKey: 'campoA', as: 'campoEstrangeiroA' });
-// OtherModel.belongsTo(Example, { foreignKey: 'campoB', as: 'campoEstrangeiroB' });
-
-// Example.hasMany(OtherModel, { foreignKey: 'campoC', as: 'campoEstrangeiroC' });
-// Example.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
-
-export default Club;
+export default Clubs;

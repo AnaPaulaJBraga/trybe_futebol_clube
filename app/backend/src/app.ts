@@ -1,13 +1,15 @@
 import * as express from 'express';
+import route from './routes';
 
 class App {
   public app: express.Express;
   // ...
 
   constructor() {
-    // ...
+    this.app = express();
     this.config();
-    // ...
+    this.app.use(express.json());
+    this.app.use(route);
   }
 
   private config():void {
@@ -22,9 +24,8 @@ class App {
     // ...
   }
 
-  // ...
   public start(PORT: string | number):void {
-    // ...
+    this.app.listen(PORT, () => console.log(`Rodando na porta ${PORT}`));
   }
 }
 
