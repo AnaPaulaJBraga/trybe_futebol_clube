@@ -1,8 +1,8 @@
 import * as express from 'express';
-import loginRoute from './loginRoute';
+import { login } from '../controller/login';
 
 const route = express.Router();
 
-route.use('/login', loginRoute);
+route.post('/', login);
 
 export default route;
