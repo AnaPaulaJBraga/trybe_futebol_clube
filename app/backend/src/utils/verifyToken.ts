@@ -1,12 +1,13 @@
+import { readFileSync } from 'fs';
 import * as jwt from 'jsonwebtoken';
 
-const secret = 'secret';
+const secret = readFileSync(`${__dirname}/../../jwt.evaluation.key`);
 
-export async function verifyToken(token: string): Promise<any> {
-    try {
-      const decoded = jwt.verify(token, secret);
-      return decoded;
-    } catch (err) {
-      return false;
-    }
+export default async function verifyToken(token: string): Promise<any> {
+  try {
+    const decoded = jwt.verify(token, secret);
+    return decoded;
+  } catch (err) {
+    return false;
   }
+}

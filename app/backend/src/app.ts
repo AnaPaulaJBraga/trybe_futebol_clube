@@ -8,8 +8,6 @@ class App {
   constructor() {
     this.app = express();
     this.config();
-    this.app.use(express.json());
-    this.app.use(route);
   }
 
   private config():void {
@@ -24,7 +22,13 @@ class App {
     // ...
   }
 
+  public use(rota:string, callback:express.RequestHandler):void {
+    this.app.use(rota, callback);
+  }
+
   public start(PORT: string | number):void {
+    this.app.use(express.json());
+    this.app.use(route);
     this.app.listen(PORT, () => console.log(`Rodando na porta ${PORT}`));
   }
 }

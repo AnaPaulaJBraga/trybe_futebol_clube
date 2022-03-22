@@ -1,10 +1,24 @@
+import { readFileSync } from 'fs';
 import * as jwt from 'jsonwebtoken';
 
-const secret = 'secret';
+const secret = readFileSync(`${__dirname}/../../jwt.evaluation.key`);
 
-export async function generateToken(id: number, username: string, role: string) {
-  const token = jwt.sign({
-    id, username, role,
-  }, secret, { expiresIn: '7d' });
+export default async function generateToken(
+  id: number,
+  username: string,
+  role: string,
+  email: string,
+) {
+  const token = jwt.sign(
+    {
+      id,
+      username,
+      role,
+      email,
+    },
+    secret,
+    { expiresIn: '3d' },
+  );
+
   return token;
 }
