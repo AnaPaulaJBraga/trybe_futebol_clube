@@ -19,7 +19,7 @@ const mockUser = {
     password: '012345'
   };
 
-describe('Testa o endopoint "/login"', () => {
+describe('Testa o endopoint `/login`', () => {
     let chaiHttpResponse: Response;
  
   before(async () => {
@@ -65,4 +65,32 @@ describe('Testa o endopoint "/login"', () => {
     expect(chaiHttpResponse.body.user).to.have.property('password');
   })
  
+});
+
+describe('Testa o endopoint `/login/validate`', () => {
+  let chaiHttpResponse: Response;
+
+before(async () => {
+  sinon
+    .stub(Users, "findOne")
+    .resolves( mockUser as Users );
+});
+
+after(()=>{
+  (Users.findOne as sinon.SinonStub).restore();
+})
+
+it('Verifica se os dados foram passados corretamente', async () => {
+  const login = await chai
+     .request(app)
+     .post('/login')
+     .send({ email: 'teste@teste.com', password: '0123456' });
+
+     const chaiHttpResponse = await chai
+     .request(app).get('/login/validate')
+     .set('Authorization', login.body.token);
+     
+  expect(chaiHttpResponse).to.have.status(200);
+})
+
 });

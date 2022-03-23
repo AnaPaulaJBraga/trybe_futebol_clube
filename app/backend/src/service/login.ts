@@ -40,6 +40,6 @@ export async function validateToken(token: any) {
   if (!tokenOk) {
     return { response: { message: 'token invalid' }, status: 401 };
   }
-  const { role } = tokenOk.payload;
+  const { role } = tokenOk;
   return { response: role, status: 200 };
 }
