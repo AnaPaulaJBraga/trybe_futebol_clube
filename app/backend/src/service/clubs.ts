@@ -2,7 +2,7 @@ import Clubs from '../database/models/clubs';
 
 export async function getAllClubs() {
   const clubs = await Clubs.findAll({ raw: true });
-  return { status: 200, response: clubs };
+  return clubs;
 }
 
 export async function getClubsById(id: number): Promise<any> {
@@ -10,5 +10,5 @@ export async function getClubsById(id: number): Promise<any> {
     raw: true,
     where: { id },
   });
-  return { status: 200, response: club };
+  return club;
 }
