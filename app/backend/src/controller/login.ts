@@ -1,14 +1,20 @@
-import { Request, Response } from 'express';
-import * as loginService from '../service/login';
+import { Request, Response, NextFunction } from 'express';
+import ILogin from '../interfaces/login';
+import StatusCode from '../database/enums/status';
+import login from '../service/login';
 
-export async function login(req: Request, res: Response): Promise<void> {
-  const { email, password } = req.body;
-  const user = await loginService.login(email, password);
-  res.status(user.status).json(user.response);
-}
+const loginController = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, password }: ILogin = req.body;
 
-export async function validate(req: Request, res: Response): Promise<void> {
-  const { authorization } = req.headers;
-  const validateToken = await loginService.validateToken(authorization);
-  res.status(validateToken.status).send(validateToken.response);
-}
+  try {
+    const loginUser = await login.login({ email, password });
+
+    return res.status(StatusCode.HTTP_OK).json(loginUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default {
+  loginController,
+};

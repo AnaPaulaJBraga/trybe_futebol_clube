@@ -1,15 +1,16 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
-import route from './routes';
+import loginRoute from './routes/loginRoute';
+import errorMiddleware from './middleware/errorMiddleware';
 
 class App {
   public app: express.Express;
-  // ...
 
   constructor() {
     this.app = express();
     this.config();
+    this.routes();
   }
 
   private config():void {
@@ -25,13 +26,13 @@ class App {
     this.app.use(cors());
   }
 
-  public use(rota:string, callback:express.RequestHandler):void {
-    this.app.use(rota, callback);
+  public routes() {
+    this.app.use('/login', loginRoute);
+
+    this.app.use(errorMiddleware);
   }
 
   public start(PORT: string | number):void {
-    this.app.use(express.json());
-    this.app.use(route);
     this.app.listen(PORT, () => console.log(`Rodando na porta ${PORT}`));
   }
 }

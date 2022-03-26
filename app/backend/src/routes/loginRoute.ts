@@ -1,10 +1,10 @@
-import * as express from 'express';
+import { Router } from 'express';
 import { login, validate } from '../controller/login';
 
-const route = express.Router();
+const router = Router();
 
-route.post('/', login);
+router.post('/', login);
 
-route.get('/validate', validate);
+router.get('/validate', validate);
 
-export default route;
+export default router;

@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '.';
-import Clubs from './clubs';
 
 class Match extends Model {
   public id: number;
@@ -23,7 +22,8 @@ Match.init({
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  home_team: {
+  homeTeam: {
+    field: 'home_team',
     type: DataTypes.INTEGER,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -32,10 +32,12 @@ Match.init({
       key: 'id',
     },
   },
-  home_team_goals: {
+  homeTeamGoals: {
+    field: 'home_team_goals',
     type: DataTypes.INTEGER,
   },
-  away_team: {
+  awayTeam: {
+    field: 'away_team',
     type: DataTypes.INTEGER,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -44,22 +46,20 @@ Match.init({
       key: 'id',
     },
   },
-  away_team_goals: {
+  awayTeamGoals: {
+    field: 'away_team_goals',
     type: DataTypes.INTEGER,
   },
-  in_progress: {
-    type: DataTypes.BOOLEAN,
+  inProgress: {
+    field: 'in_progress',
+    type: DataTypes.INTEGER,
   },
 }, {
   underscored: true,
   sequelize: db,
-  modelName: 'Matchs',
+  modelName: 'matchs',
   tableName: 'matchs',
   timestamps: false,
 });
-
-Match.belongsTo(Clubs, { foreignKey: 'id', as: 'clubs' });
-
-Clubs.hasMany(Match, { foreignKey: 'id', as: 'matchs' });
 
 export default Match;
