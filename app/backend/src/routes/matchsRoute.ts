@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import matchs from '../controller/matchs';
 
-const matchsRoute = Router();
+const router = Router();
 
-matchsRoute.get('/', matchs.getAllMatchs);
+router.get('/', matchs.getAllMatchs);
 
-export default matchsRoute;
+export default router;

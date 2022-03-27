@@ -1,18 +1,7 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import matchs from '../service/matchs';
 
-const getMatchInProgress = async (req: Request, res: Response, inProgress: string) => {
-  let query;
-
-  if (inProgress === 'true') query = true;
-  else query = false;
-
-  const matchsInProgress = await matchs.getMatchsInProgress(query);
-
-  return res.status(201).json(matchsInProgress);
-};
-
-const getAllMatchs = async (req: Request, res: Response) => {
+const getAllMatchs = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { inProgress } = req.query;
     if (!inProgress) {
@@ -20,13 +9,13 @@ const getAllMatchs = async (req: Request, res: Response) => {
       return res.status(200).json(getAll);
     }
 
-    getMatchInProgress(req, res, String(inProgress));
-  } catch (err) {
-    return res.status(401).json({ error: `${err}` });
+    const getMatchInProgress = matchs.getMatchsInProgress(inProgress as string);
+    return res.status(200).json(getMatchInProgress);
+  } catch (error) {
+    next(error);
   }
 };
 
 export default {
   getAllMatchs,
-  getMatchInProgress,
 };

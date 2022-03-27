@@ -3,7 +3,6 @@ import Match from '../database/models/matchs';
 
 const getAllMatchs = async () => {
   const matchs = await Match.findAll({
-    attributes: { exclude: ['home_team', 'away_team'] },
     include: [
       { model: Clubs, as: 'awayClub', attributes: ['clubName'] },
       { model: Clubs, as: 'homeClub', attributes: ['clubName'] },
@@ -12,10 +11,14 @@ const getAllMatchs = async () => {
   return matchs;
 };
 
-const getMatchsInProgress = async (query : boolean) => {
+const getMatchsInProgress = async (inProgress: string) => {
+  let where = {};
+
+  if (inProgress === 'false') where = { inProgress: false };
+  if (inProgress === 'true') where = { inProgress: true };
+
   const matchsInProgress = await Match.findAll({
-    where: { inProgress: query },
-    attributes: { exclude: ['home_team', 'away_team'] },
+    where,
     include: [
       { model: Clubs, as: 'awayClub', attributes: ['clubName'] },
       { model: Clubs, as: 'homeClub', attributes: ['clubName'] },
