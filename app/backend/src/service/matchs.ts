@@ -1,5 +1,6 @@
 import Clubs from '../database/models/clubs';
 import Match from '../database/models/matchs';
+import IMatch from '../interfaces/Match';
 
 const getAllMatchs = async () => {
   const matchs = await Match.findAll({
@@ -27,7 +28,23 @@ const getMatchsInProgress = async (inProgress: string) => {
   return matchsInProgress;
 };
 
+const create = async ({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress }: IMatch) => {
+  const newMatch = await Match.create({
+    homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress,
+  });
+  return newMatch;
+};
+
+const update = async (id: number) => {
+  await Match.update(
+    { inProgress: false },
+    { where: { id } },
+  );
+};
+
 export default {
   getAllMatchs,
   getMatchsInProgress,
+  create,
+  update,
 };

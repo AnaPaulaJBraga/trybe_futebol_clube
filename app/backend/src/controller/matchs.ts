@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import matchs from '../service/matchs';
+import statusCode from '../database/enums/status';
 
 const getAllMatchs = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -16,6 +17,20 @@ const getAllMatchs = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
+const create = async (req: Request, res: Response, next: NextFunction) => {
+  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = req.body;
+
+  try {
+    const newMatch = await matchs.create({
+      homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress,
+    });
+    return res.status(statusCode.HTTP_CREATED).json(newMatch);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   getAllMatchs,
+  create,
 };
