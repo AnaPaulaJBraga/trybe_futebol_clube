@@ -6,9 +6,9 @@ import IToken from '../interfaces/Token';
 
 const SECRET = fs.readFileSync('jwt.evaluation.key', 'utf-8');
 
-const authValidation = (userData: object) => {
-  const token = Jwt.sign(userData, SECRET, {
-    expiresIn: '1d',
+const authValidation = ({ username, role, email }: IToken) => {
+  const token = Jwt.sign({ username, role, email }, SECRET, {
+    expiresIn: '3d',
     algorithm: 'HS256',
   });
 
@@ -31,6 +31,7 @@ const authVerify = (req: Request, res: Response) => {
 
   return res.status(StatusCode.HTTP_OK).send(role);
 };
+
 export {
   authValidation,
   authVerify,
