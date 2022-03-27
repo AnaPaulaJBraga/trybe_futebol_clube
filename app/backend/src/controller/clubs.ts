@@ -1,15 +1,27 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import * as clubsService from '../service/clubs';
 
-export async function getAllClubs(_req: Request, res: Response): Promise<void> {
-  const clubs = await clubsService.getAllClubs();
+const getAllClubs = async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    const clubs = await clubsService.getAllClubs();
 
-  res.status(200).json(clubs);
-}
+    return res.status(200).json(clubs);
+  } catch (error) {
+    next(error);
+  }
+};
 
-export async function getClubsById(req: Request, res: Response): Promise<void> {
+const getClubsById = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
-  const idClub = await clubsService.getClubsById(+id);
+  try {
+    const idClub = await clubsService.getClubsById({ id });
+    return res.status(200).json(idClub);
+  } catch (error) {
+    next(error);
+  }
+};
 
-  res.status(200).json(idClub);
-}
+export {
+  getAllClubs,
+  getClubsById,
+};

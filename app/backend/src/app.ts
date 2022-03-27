@@ -3,6 +3,8 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import loginRoute from './routes/loginRoute';
 import errorMiddleware from './middleware/errorMiddleware';
+import matchsRoute from './routes/matchsRoute';
+import clubsRoute from './routes/clubsRoutes';
 
 class App {
   public app: express.Express;
@@ -28,6 +30,8 @@ class App {
 
   public routes() {
     this.app.use('/login', loginRoute);
+    this.app.use('/clubs', clubsRoute);
+    this.app.use('/matchs', matchsRoute);
 
     this.app.use(errorMiddleware);
   }

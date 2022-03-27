@@ -1,10 +1,9 @@
-import * as express from 'express';
-import { getAllClubs, getClubsById } from '../controller/clubs';
+import { Router } from 'express';
+import * as clubsController from '../controller/clubs';
 
-const route = express.Router();
+const router = Router();
 
-route.get('/', getAllClubs);
+router.get('/', clubsController.getAllClubs);
+router.get('/:id', clubsController.getClubsById);
 
-route.get('/:id', getClubsById);
-
-export default route;
+export default router;

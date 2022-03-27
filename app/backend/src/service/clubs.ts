@@ -1,14 +1,17 @@
+import IClubId from '../interfaces/Club';
 import Clubs from '../database/models/clubs';
 
-export async function getAllClubs() {
+const getAllClubs = async () => {
   const clubs = await Clubs.findAll({ raw: true });
   return clubs;
-}
+};
 
-export async function getClubsById(id: number): Promise<any> {
-  const club = await Clubs.findOne({
-    raw: true,
-    where: { id },
-  });
+const getClubsById = async ({ id }: IClubId) => {
+  const club = await Clubs.findByPk(id);
   return club;
-}
+};
+
+export {
+  getClubsById,
+  getAllClubs,
+};
