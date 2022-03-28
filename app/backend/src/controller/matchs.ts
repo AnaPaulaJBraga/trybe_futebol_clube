@@ -30,7 +30,30 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const update = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  try {
+    await matchs.update(+id);
+    return res.status(200).json({ message: 'Finished Match!' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateResult = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+  try {
+    await matchs.updateResult(+id, { homeTeamGoals, awayTeamGoals });
+    res.status(200).json({ message: 'Updated Match!' });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   getAllMatchs,
   create,
+  update,
+  updateResult,
 };

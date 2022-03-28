@@ -1,6 +1,6 @@
 import Clubs from '../database/models/clubs';
 import Match from '../database/models/matchs';
-import IMatch from '../interfaces/Match';
+import { IMatchTeam, IMatch } from '../interfaces/Match';
 
 const getAllMatchs = async () => {
   const matchs = await Match.findAll({
@@ -42,9 +42,17 @@ const update = async (id: number) => {
   );
 };
 
+const updateResult = async (id: number, { homeTeamGoals, awayTeamGoals }: IMatchTeam) => {
+  await Match.update(
+    { homeTeamGoals, awayTeamGoals },
+    { where: { id } },
+  );
+};
+
 export default {
   getAllMatchs,
   getMatchsInProgress,
   create,
   update,
+  updateResult,
 };

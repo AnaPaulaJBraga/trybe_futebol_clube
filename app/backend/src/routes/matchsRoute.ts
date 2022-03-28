@@ -4,8 +4,9 @@ import matchs from '../controller/matchs';
 
 const router = Router();
 
-router.patch('/:id/finish', matchs.update);
 router.get('/', matchs.getAllMatchs);
 router.post('/', validateTeams, validateMatchs, matchs.create);
+router.patch('/:id', matchs.updateResult);
+router.patch('/:id/finish', matchs.update);
 
 export default router;

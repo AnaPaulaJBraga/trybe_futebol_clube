@@ -1,10 +1,10 @@
-interface IMatch {
-  homeTeam: number;
-  awayTeam: number;
+export interface IMatchTeam{
   homeTeamGoals: number;
   awayTeamGoals: number;
-  inProgress: boolean;
 }
 
-export default IMatch;
-
+export interface IMatch extends IMatchTeam {
+  homeTeam: number;
+  awayTeam: number;
+  inProgress: boolean;
+}
