@@ -49,7 +49,7 @@ const updateResult = async (id: number, { homeTeamGoals, awayTeamGoals }: IMatch
   );
 };
 
-export default {
+export {
   getAllMatchs,
   getMatchsInProgress,
   create,

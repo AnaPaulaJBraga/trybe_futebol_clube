@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import matchs from '../service/matchs';
+import * as matchs from '../service/matchs';
 import statusCode from '../database/enums/status';
 
 const getAllMatchs = async (req: Request, res: Response, next: NextFunction) => {
